@@ -10,6 +10,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
+        "php-http/guzzle6-adapter": "^1.1",
         "illuminate/support": "~5",
         "omnipay/common": "~3.0"
     },
