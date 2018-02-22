@@ -23,7 +23,7 @@ Version `2.3` and onwards supports Laravel 5.4
 
 Include the laravel-omnipay package as a dependency in your `composer.json`:
 
-    "ignited/laravel-omnipay": "2.*"
+    "laravel-omnipay/laravel-omnipay": "2.*"
     
 **Note:** You don't need to include the `omnipay/common` in your composer.json - it is a requirement of the `laravel-omnipay` package.
 
