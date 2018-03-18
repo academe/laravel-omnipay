@@ -1,9 +1,10 @@
-<?php namespace Ignited\LaravelOmnipay;
+<?php namespace Omnipay\LaravelOmnipay;
 
 use Illuminate\Support\ServiceProvider;
 use Omnipay\Common\GatewayFactory;
 
-abstract class BaseServiceProvider extends ServiceProvider {
+abstract class BaseServiceProvider extends ServiceProvider
+{
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -44,5 +45,4 @@ abstract class BaseServiceProvider extends ServiceProvider {
     {
         return ['omnipay'];
     }
-
 }

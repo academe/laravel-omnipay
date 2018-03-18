@@ -1,11 +1,12 @@
-<?php namespace Ignited\LaravelOmnipay;
+<?php namespace Omnipay\LaravelOmnipay;
 
 use Closure;
 use Omnipay\Common\GatewayFactory;
 use Omnipay\Common\Helper;
 use Omnipay\Common\CreditCard;
 
-class LaravelOmnipayManager {
+class LaravelOmnipayManager
+{
     /**
      * The application instance.
      *
@@ -50,7 +51,7 @@ class LaravelOmnipayManager {
         $this->factory = $factory;
     }
 
-    /** 
+    /**
      * Get an instance of the specified gateway
      * @param  index of config array to use
      * @return Omnipay\Common\AbstractGateway
@@ -59,8 +60,7 @@ class LaravelOmnipayManager {
     {
         $name = $name ?: $this->getGateway();
 
-        if ( ! isset($this->gateways[$name]))
-        {
+        if (! isset($this->gateways[$name])) {
             $this->gateways[$name] = $this->resolve($name);
         }
 
@@ -71,8 +71,7 @@ class LaravelOmnipayManager {
     {
         $config = $this->getConfig($name);
 
-        if(is_null($config))
-        {
+        if (is_null($config)) {
             throw new \UnexpectedValueException("Gateway [$name] is not defined.");
         }
 
@@ -82,8 +81,7 @@ class LaravelOmnipayManager {
 
         $reflection = new \ReflectionClass($class);
 
-        foreach($config['options'] as $optionName=>$value)
-        {
+        foreach ($config['options'] as $optionName=>$value) {
             $method = 'set' . ucfirst($optionName);
 
             if ($reflection->hasMethod($method)) {
@@ -111,8 +109,7 @@ class LaravelOmnipayManager {
 
     public function getGateway()
     {
-        if(!isset($this->gateway))
-        {
+        if (!isset($this->gateway)) {
             $this->gateway = $this->getDefault();
         }
         return $this->gateway;
@@ -137,8 +134,7 @@ class LaravelOmnipayManager {
     {
         $callable = [$this->gateway(), $method];
 
-        if(method_exists($this->gateway(), $method))
-        {
+        if (method_exists($this->gateway(), $method)) {
             return call_user_func_array($callable, $parameters);
         }
 

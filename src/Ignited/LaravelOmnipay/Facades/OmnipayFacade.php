@@ -1,9 +1,11 @@
-<?php namespace Ignited\LaravelOmnipay\Facades;
+<?php namespace Omnipay\LaravelOmnipay\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class OmnipayFacade extends Facade {
-
-    protected static function getFacadeAccessor() { return 'omnipay'; }
-
+class OmnipayFacade extends Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return 'omnipay';
+    }
 }
