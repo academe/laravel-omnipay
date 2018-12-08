@@ -1,9 +1,14 @@
-<?php namespace Omnipay\LaravelOmnipay;
+<?php
+
+namespace Academe\LaravelOmnipay;
 
 class LumenOmnipayServiceProvider extends BaseServiceProvider
 {
     public function boot()
     {
-        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/config.php'), 'laravel-omnipay');
+        $this->mergeConfigFrom(
+            realpath(__DIR__ . '/../config/laravel-omnipay.php'),
+            'laravel-omnipay'
+        );
     }
 }

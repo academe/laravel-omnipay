@@ -1,9 +1,15 @@
-<?php namespace Omnipay\LaravelOmnipay;
+<?php
+
+namespace Academe\LaravelOmnipay;
 
 use Closure;
 use Omnipay\Common\GatewayFactory;
 use Omnipay\Common\Helper;
 use Omnipay\Common\CreditCard;
+
+use UnexpectedValueException;
+use BadMethodCallException;
+use ReflectionClass;
 
 class LaravelOmnipayManager
 {
@@ -72,16 +78,22 @@ class LaravelOmnipayManager
         $config = $this->getConfig($name);
 
         if (is_null($config)) {
-            throw new \UnexpectedValueException("Gateway [$name] is not defined.");
+            throw new UnexpectedValueException(sprintf(
+                'Gateway [%s] is not defined.',
+                $name
+            ));
         }
 
-        $gateway = $this->factory->create($config['driver'], $this->getHttpClient());
+        $gateway = $this->factory->create(
+            $config['driver'],
+            $this->getHttpClient()
+        );
 
         $class = trim(Helper::getGatewayClassName($config['driver']), "\\");
 
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
 
-        foreach ($config['options'] as $optionName=>$value) {
+        foreach ($config['options'] as $optionName => $value) {
             $method = 'set' . ucfirst($optionName);
 
             if ($reflection->hasMethod($method)) {
@@ -99,12 +111,12 @@ class LaravelOmnipayManager
 
     protected function getDefault()
     {
-        return $this->app['config']['laravel-omnipay.default'];
+        return $this->app['config']['laravel-omnipay.default'] ?? null;
     }
 
     protected function getConfig($name)
     {
-        return $this->app['config']["laravel-omnipay.gateways.{$name}"];
+        return $this->app['config']["laravel-omnipay.gateways.{$name}"] ?? null;
     }
 
     public function getGateway()
@@ -112,6 +124,7 @@ class LaravelOmnipayManager
         if (!isset($this->gateway)) {
             $this->gateway = $this->getDefault();
         }
+
         return $this->gateway;
     }
 
@@ -138,6 +151,10 @@ class LaravelOmnipayManager
             return call_user_func_array($callable, $parameters);
         }
 
-        throw new \BadMethodCallException("Method [$method] is not supported by the gateway [$this->gateway].");
+        throw new BadMethodCallException(sprintf(
+            'Method [%s] is not supported by the gateway [%s].',
+            $method,
+            $this->gateway
+        ));
     }
 }

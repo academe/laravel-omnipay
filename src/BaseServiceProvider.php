@@ -1,10 +1,13 @@
-<?php namespace Omnipay\LaravelOmnipay;
+<?php
+
+namespace Academe\LaravelOmnipay;
 
 use Illuminate\Support\ServiceProvider;
 use Omnipay\Common\GatewayFactory;
 
 abstract class BaseServiceProvider extends ServiceProvider
 {
+    const PROVIDES = 'laravel-omnipay';
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -28,7 +31,7 @@ abstract class BaseServiceProvider extends ServiceProvider
      */
     public function registerManager()
     {
-        $this->app->singleton('omnipay', function ($app) {
+        $this->app->singleton(static::PROVIDES, function ($app) {
             $factory = new GatewayFactory;
             $manager = new LaravelOmnipayManager($app, $factory);
 
@@ -43,6 +46,6 @@ abstract class BaseServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['omnipay'];
+        return [static::PROVIDES];
     }
 }

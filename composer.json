@@ -1,27 +1,39 @@
 {
-    "name": "laravel-omnipay/laravel-omnipay",
+    "name": "academe/laravel-omnipay",
     "description": "Integerates Omnipay with Laravel and provides an easy configuration.",
-    "keywords": ["omnipay", "payments", "laravel", "laravel5"],
+    "keywords": ["omnipay", "omnipay3", "payments", "laravel", "laravel5"],
     "authors": [
         {
             "name": "Alex Whiteside",
             "email": "alexwhiteside@ignitedlabs.com.au"
+        },
+        {
+            "name": "Jason Judge",
+            "email": "jason@academe.co.uk"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "php-http/guzzle6-adapter": "^1.1",
+        "php": ">=7.0.0",
+        "laravel/framework": "~5",
         "illuminate/support": "~5",
         "omnipay/common": "~3.0"
     },
     "autoload": {
-        "psr-0": {
-            "Omnipay\\LaravelOmnipay": "src/"
+        "psr-4": {
+            "Academe\\LaravelOmnipay\\": "src/"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.1-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Academe\\LaravelOmnipay\\LaravelOmnipayServiceProvider"
+            ],
+            "aliases": {
+                "Omnipay": "Academe\\LaravelOmnipay\\Facades\\OmnipayFacade"
+            }
         }
     },
     "minimum-stability": "dev"
