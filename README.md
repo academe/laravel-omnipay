@@ -28,12 +28,12 @@ Example:
 
     "omnipay/eway": "3.*"
 
-Alternatively you can include every gateway by requring:
+For Omnipay 3.x you will also need a HTTP client and a bridge.
+For example to use Guzzle, require these two packages
+(later versions are likely to be supported):
 
-    "omnipay/omnipay": "3.*"
-
-**Note:** This requires a large amount of composer work as it needs to fetch each seperate repository.
-This is not recommended.
+    "guzzlehttp/guzzle": "^6.3"
+    "php-http/guzzle6-adapter": "~1.1"
 
 ### Installation
 
@@ -41,23 +41,25 @@ Run `composer install` to download the dependencies.
 
 #### Laravel 5
 
-**Note:** For Laravel 5.6, the following steps are automated through the discovery process,
-so you will not need to add the provider and facade manually.
+**Note:** From Laravel 5.6, the following steps are automated through the discovery feature,
+so you will not need to add the provider and facade entries manually.
 
 Add a ServiceProvider to your providers array in `config/app.php`:
 
 ```php
 'providers' => [
-
-     Academe\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
-
-]
+    ...
+    Academe\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
+];
 ```
 
 Add the `Omnipay` facade to your facades array:
 
 ```php
-	'Omnipay' => Academe\LaravelOmnipay\Facades\OmnipayFacade::class,
+'aliases' => [
+    ...
+    'Omnipay' => Academe\LaravelOmnipay\Facades\OmnipayFacade::class,
+];
 ```
 
 Finally, publish the configuration files:
@@ -123,19 +125,23 @@ $cardInput = [
 $card = Omnipay::creditCard($cardInput);
 $response = Omnipay::purchase([
     'amount'    => '100.00',
-    'returnUrl' => 'http://bobjones.com/payment/return',
-    'cancelUrl' => 'http://bobjones.com/payment/cancel',
+    'returnUrl' => 'http://example.com/payment/return',
+    'cancelUrl' => 'http://example.com/payment/cancel',
     'card'      => $cardInput
 ])->send();
 
 dd($response->getMessage());
 ```
-    
+
 This will use the gateway specified in the config as `default`.
 
 You can explicitly specify a gateway to use:
 
 ```php
+// Alias for \Academe\LaravelOmnipay\Facades\OmnipayFacade
+
+use Omnipay;
+
 Omnipay::setGateway('eway');
 
 $response = Omnipay::purchase([
