@@ -7,6 +7,11 @@ Omnipay for Laravel 5 & Lumen
 
 Integrates the [Omnipay](https://github.com/adrianmacneil/omnipay) PHP library with Laravel 5.6 via a ServiceProvider to make Configuring multiple payment tunnels a breeze!
 
+> :warning: **Please note: this is no longer maintained. It was an early fork of https://github.com/ignited/laravel-omnipay
+required to use Omnipay 3.0 before the source project included it. Since then, the source Ignited project
+has kept up with Laravel versions, so I would recommend using that. However, pull requests are still accepeted
+if that helps to upgrade your legacy projects, and I won't be taking this package down any time soon.**
+
 ### Now using Omnipay 3.0
  
 * Version `2.0` and onwards has been updated to use Omnipay 3.0.
